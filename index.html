@@ -302,6 +302,9 @@
                bottom: 10px;
                 left: 10px;
             }
+            .transition-effect {
+                animation: zoomInOut 0.6s ease-in-out forwards; /* Giảm thời gian */
+            }
         }
 
         @media (max-width: 480px) {
@@ -316,6 +319,9 @@
             .btn {
                 padding: 8px 16px;
                 font-size: 0.9rem;
+            }
+            .transition-effect {
+                animation: zoomInOut 0.6s ease-in-out forwards; /* Giảm thời gian */
             }
             
             /* Điều chỉnh bố cục nút trên mobile */
@@ -524,25 +530,26 @@
             }, 1500);
         };
         
-        
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
         function createHearts(count, containerId) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
 
             const messages = ["I love you", "Anh yêu em", "Je t'aime", "我爱你", "愛してる", "Te amo"];
+            count = isMobile ? Math.min(count, 12) : count;
             
             for (let i = 0; i < count; i++) {
-                setTimeout(() => {
+                
                     const heartContainer = document.createElement('div');
                     heartContainer.classList.add('heart-container');
                     heartContainer.style.left = Math.random() * 100 + 'vw';
                     heartContainer.style.top = Math.random() * 100 + 'vh';
-                    heartContainer.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    heartContainer.style.animationDuration = isMobile ? 'none' : (Math.random() * 3 + 3) + 's';
                     heartContainer.style.animationDelay = (Math.random() * 2) + 's';
                     
                     const heart = document.createElement('div');
                     heart.innerHTML = '❤️';
-                    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                    heart.style.fontSize = isMobile ? '30px' : (Math.random() * 20 + 10) + 'px';
                     
                     const text = document.createElement('div');
                     text.classList.add('heart-text');
@@ -553,7 +560,7 @@
                     heartContainer.appendChild(heart);
                     heartContainer.appendChild(text);
                     container.appendChild(heartContainer);
-                }, i * 100);
+               
             }
         }
         
