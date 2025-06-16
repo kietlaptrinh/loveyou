@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gửi đến trái tim em ❤️</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
     <style>
         * {
             margin: 0;
@@ -11,13 +12,15 @@
             box-sizing: border-box;
         }
         
-        body {
+        html, body {
             overflow: hidden;
             font-family: 'Arial', sans-serif;
             background: #000;
             perspective: 1000px;
             height: 100vh;
+            
             cursor: pointer;
+            touch-action: manipulation;
         }
         
         .scene {
@@ -45,17 +48,19 @@
         }
         
         .page h1 {
-            font-size: 3rem;
+            font-size: clamp(2rem, 5vw, 3rem);
             margin-bottom: 20px;
             text-shadow: 0 0 10px rgba(255, 0, 127, 0.8);
             transform: translateZ(50px);
+            padding: 0 15px;
         }
         
         .page p {
-            font-size: 1.5rem;
-            max-width: 600px;
-            margin-bottom: 30px;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            max-width: 90%;
+            margin-bottom: 20px;
             transform: translateZ(30px);
+            padding: 0 15px;
         }
         
         .heart {
@@ -63,6 +68,24 @@
             pointer-events: none;
             animation: float 6s ease-in-out infinite;
             filter: drop-shadow(0 0 10px rgba(255, 0, 127, 0.8));
+        }
+
+        .heart-container {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 127, 0.8));
+        }
+        
+        .heart-text {
+            color: white;
+            font-size: clamp(10px, 2vw, 14px);
+            margin-top: 5px;
+            text-shadow: 0 0 5px rgba(255, 0, 127, 0.8);
+            animation: textFloat 6s ease-in-out infinite;
         }
         
         @keyframes float {
@@ -73,6 +96,20 @@
                 transform: translateY(-20px) rotate(5deg);
             }
         }
+
+        @keyframes textFloat {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-10px) scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+
+
         
         .btn {
             padding: 15px 30px;
@@ -80,11 +117,12 @@
             border: none;
             border-radius: 50px;
             color: white;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             cursor: pointer;
             transition: all 0.3s ease;
             transform: translateZ(40px);
             box-shadow: 0 5px 15px rgba(255, 0, 127, 0.4);
+            margin: 5px;
         }
         
         .btn:hover {
@@ -126,7 +164,7 @@
             transform: rotateY(180deg);
         }
         
-        /* Hiệu ứng chuyển cảnh đặc biệt */
+        
         .transition-effect {
             position: fixed;
             top: 0;
@@ -162,7 +200,7 @@
             display: none;
         }
         
-        /* Hiệu ứng chữ nhảy */
+        
         .jumping-text span {
             display: inline-block;
             animation: jump 0.5s ease alternate infinite;
@@ -175,7 +213,7 @@
             }
         }
         
-        /* Tạo delay cho từng chữ cái */
+        
         .jumping-text span:nth-child(1) { animation-delay: 0.1s; }
         .jumping-text span:nth-child(2) { animation-delay: 0.2s; }
         .jumping-text span:nth-child(3) { animation-delay: 0.3s; }
@@ -187,7 +225,7 @@
         .jumping-text span:nth-child(9) { animation-delay: 0.9s; }
         .jumping-text span:nth-child(10) { animation-delay: 1.0s; }
         
-        /* Hiệu ứng background */
+        
         .bg-effect {
             position: absolute;
             top: 0;
@@ -224,13 +262,75 @@
             overflow: hidden;
             opacity: 0;
         }
+
+
+        .personal-logo {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 999;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .personal-logo:hover {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .page h1 {
+                margin-bottom: 15px;
+            }
+            
+            .page p {
+                margin-bottom: 15px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+            }
+            .personal-logo {
+                width: 29px;
+                height: 29px;
+               bottom: 10px;
+                left: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page h1 {
+                font-size: 1.8rem;
+            }
+            
+            .page p {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            /* Điều chỉnh bố cục nút trên mobile */
+            #page3 div {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="transition-effect"></div>
     
     <div class="scene">
-        <!-- Trang 1 -->
+        
         <div class="page" id="page1">
             <div class="bg-effect"></div>
             <h1 class="jumping-text">
@@ -244,22 +344,22 @@
             <p>Trái tim anh đang đập rộn ràng vì em...</p>
             <button class="btn pulse" onclick="nextPage()">Nhấn vào đây ❤️</button>
             
-            <!-- Tạo trái tim bay -->
+            
             <div class="particles" id="hearts1"></div>
         </div>
         
-        <!-- Trang 2 -->
+        
         <div class="page" id="page2" style="transform: rotateY(180deg); display: none;">
             <div class="bg-effect"></div>
             <h1>Từ lần đầu gặp em</h1>
             <p>Anh biết trái tim mình đã thuộc về ai...</p>
             <button class="btn pulse" onclick="nextPage()">Tiếp tục nào ❤️</button>
             
-            <!-- Tạo pháo hoa -->
+            
             <div class="particles" id="fireworks"></div>
         </div>
         
-        <!-- Trang 3 -->
+        
         <div class="page" id="page3" style="transform: rotateY(180deg); display: none;">
             <div class="bg-effect"></div>
             <h1 class="jumping-text">
@@ -280,29 +380,32 @@
                 <button class="btn" id="noBtn" onmouseover="moveNoButton()" style="background: linear-gradient(45deg, #F44336, #FF9800);">Không</button>
             </div>
             
-            <!-- Tạo hiệu ứng sao băng -->
+            
             <div class="particles" id="stars"></div>
         </div>
         
-        <!-- Trang 4 (khi chọn Có) -->
+        
         <div class="page" id="page4" style="transform: rotateY(180deg); display: none;">
             <div class="bg-effect"></div>
             <h1>Yay! ❤️❤️❤️</h1>
             <p>Anh biết em cũng thích anh mà! Hãy để chúng mình cùng viết nên câu chuyện tình yêu đẹp nhất nhé!</p>
             <button class="btn pulse" onclick="restart()">Xem lại từ đầu</button>
             
-            <!-- Tạo hiệu ứng trái tim tỏa sáng -->
+            
             <div class="particles" id="hearts2"></div>
         </div>
     </div>
 <div id="youtube-player" class="youtube-hidden"></div>
+<a href="https://www.facebook.com/profile.php?id=61572382496641" target="_blank" class="personal-logo-container">
+        <img src="https://scontent.fdad2-1.fna.fbcdn.net/v/t39.30808-6/474185687_592656700289838_2663838188325419300_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=8mI96ACzQIUQ7kNvwE4fGA-&_nc_oc=Adk1kT97NSyN7Xj-HAvB5ENqjd6HGzXBtP6vLTWii9FheumoC6D_1EToJGHLpsBHvK8fcp5P9IhiMLVQLNunsoEx&_nc_zt=23&_nc_ht=scontent.fdad2-1.fna&_nc_gid=h9rnwvKUpYExkzl2dnCN4A&oh=00_AfNE-j_-o419lqAS0Uxy-HRj4vnZovbppHAmg5JG7gDH8w&oe=6855A51A" alt="Logo của bạn" class="personal-logo">
+    </a>
     <script>
 
         
         let currentPage = 1;
         const totalPages = 3;
         
-        // Hiệu ứng khi load trang
+        
         window.onload = function() {
             setTimeout(() => {
                 document.querySelector('.transition-effect').classList.add('hidden');
@@ -310,57 +413,57 @@
             }, 1500);
         };
         
-        // Chuyển trang
+        
         function nextPage() {
-            // Hiệu ứng chuyển cảnh
+           
             const effect = document.querySelector('.transition-effect');
             effect.classList.remove('hidden');
             
             setTimeout(() => {
-                // Ẩn trang hiện tại
+               
                 document.getElementById(`page${currentPage}`).style.display = 'none';
                 
-                // Tăng số trang
+               
                 currentPage++;
                 
-                // Hiển thị trang mới
+             
                 document.getElementById(`page${currentPage}`).style.display = 'flex';
                 
-                // Thêm hiệu ứng
+               
                 if (currentPage === 2) {
                     createFireworks(20);
                 } else if (currentPage === 3) {
                     createStars(50);
                 }
                 
-                // Xoay cảnh
+               
                 document.querySelector('.scene').classList.add('flip');
                 
-                // Ẩn hiệu ứng chuyển cảnh
+               
                 setTimeout(() => {
                     effect.classList.add('hidden');
                 }, 500);
             }, 500);
         }
         
-        // Khi chọn "Có"
+        
         function showAnswer(yes) {
             if (yes) {
-                // Hiệu ứng chuyển cảnh
+               
                 const effect = document.querySelector('.transition-effect');
                 effect.classList.remove('hidden');
                 
                 setTimeout(() => {
-                    // Ẩn trang hiện tại
+                   
                     document.getElementById(`page${currentPage}`).style.display = 'none';
                     
-                    // Hiển thị trang kết quả
+                    
                     document.getElementById('page4').style.display = 'flex';
                     
-                    // Tạo trái tim bay
+                    
                     createHearts(50, 'hearts2');
                     
-                    // Ẩn hiệu ứng chuyển cảnh
+                    
                     setTimeout(() => {
                         effect.classList.add('hidden');
                     }, 500);
@@ -368,7 +471,7 @@
             }
         }
         
-        // Di chuyển nút "Không"
+       
         function moveNoButton() {
             const btn = document.getElementById('noBtn');
             const x = Math.random() * (window.innerWidth - btn.offsetWidth);
@@ -378,29 +481,29 @@
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
 
-            // Thêm hiệu ứng mượt mà khi di chuyển
+           
             btn.style.transition = 'all 0.5s ease-out';
             
-            // Xóa transition sau khi di chuyển xong để lần sau nhảy ngay
+            
             setTimeout(() => {
                 btn.style.transition = 'none';
             }, 500);
         }
 
-        // Kiểm tra thiết bị có hover không
+        
         function hasHover() {
             return window.matchMedia('(hover: hover)').matches;
         }
 
-        // Sự kiện cho nút "Không"
+       
         function setupNoButton() {
             const noBtn = document.getElementById('noBtn');
             
             if (hasHover()) {
-                // Thiết bị có hover (máy tính)
+                
                 noBtn.addEventListener('mouseover', moveNoButton);
             } else {
-                // Thiết bị không có hover (điện thoại)
+                
                 noBtn.addEventListener('touchstart', function(e) {
                     e.preventDefault();
                     moveNoButton();
@@ -412,38 +515,50 @@
             }
         }
 
-        // Khi trang tải xong
+    
         window.onload = function() {
             setTimeout(() => {
                 document.querySelector('.transition-effect').classList.add('hidden');
                 createHearts(30, 'hearts1');
-                setupNoButton(); // Thiết lập sự kiện cho nút "Không"
+                setupNoButton(); 
                 loadYouTubeAPI();
             }, 1500);
         };
         
-        // Tạo trái tim bay
+        
         function createHearts(count, containerId) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
+
+            const messages = ["I love you", "Anh yêu em", "Je t'aime", "我爱你", "愛してる", "Te amo"];
             
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.classList.add('heart');
-                    heart.innerHTML = '❤️';
-                    heart.style.left = Math.random() * 100 + 'vw';
-                    heart.style.top = Math.random() * 100 + 'vh';
-                    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                    heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                    heart.style.animationDelay = (Math.random() * 2) + 's';
+                    const heartContainer = document.createElement('div');
+                    heartContainer.classList.add('heart-container');
+                    heartContainer.style.left = Math.random() * 100 + 'vw';
+                    heartContainer.style.top = Math.random() * 100 + 'vh';
+                    heartContainer.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    heartContainer.style.animationDelay = (Math.random() * 2) + 's';
                     
-                    container.appendChild(heart);
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                    
+                    const text = document.createElement('div');
+                    text.classList.add('heart-text');
+                    text.textContent = messages[Math.floor(Math.random() * messages.length)];
+                    text.style.animationDuration = heartContainer.style.animationDuration;
+                    text.style.animationDelay = heartContainer.style.animationDelay;
+                    
+                    heartContainer.appendChild(heart);
+                    heartContainer.appendChild(text);
+                    container.appendChild(heartContainer);
                 }, i * 100);
             }
         }
         
-        // Tạo pháo hoa
+        
         function createFireworks(count) {
             const container = document.getElementById('fireworks');
             container.innerHTML = '';
@@ -458,7 +573,7 @@
                     
                     container.appendChild(firework);
                     
-                    // Xóa pháo hoa sau khi nổ
+                    
                     setTimeout(() => {
                         firework.remove();
                     }, 1000);
@@ -466,7 +581,7 @@
             }
         }
         
-        // Tạo sao băng
+        
         function createStars(count) {
             const container = document.getElementById('stars');
             container.innerHTML = '';
@@ -487,36 +602,36 @@
             }
         }
         
-        // Bắt đầu lại từ đầu
+       
         function restart() {
-            // Hiệu ứng chuyển cảnh
+            
             const effect = document.querySelector('.transition-effect');
             effect.classList.remove('hidden');
             
             setTimeout(() => {
-                // Ẩn tất cả các trang
+                
                 document.querySelectorAll('.page').forEach(page => {
                     page.style.display = 'none';
                 });
                 
-                // Hiển thị trang đầu tiên
+               
                 document.getElementById('page1').style.display = 'flex';
                 currentPage = 1;
                 
-                // Xoay cảnh về ban đầu
+               
                 document.querySelector('.scene').classList.remove('flip');
                 
-                // Tạo lại trái tim bay
+               
                 createHearts(30, 'hearts1');
                 
-                // Ẩn hiệu ứng chuyển cảnh
+                
                 setTimeout(() => {
                     effect.classList.add('hidden');
                 }, 500);
             }, 500);
         }
 
-        // Tải YouTube API
+       
         function loadYouTubeAPI() {
             const tag = document.createElement('script');
             tag.src = "https://www.youtube.com/iframe_api";
@@ -524,10 +639,10 @@
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
         }
 
-        // Biến lưu player
+        
         let youtubePlayer;
         
-        // Khởi tạo YouTube player
+        
         function onYouTubeIframeAPIReady() {
             youtubePlayer = new YT.Player('youtube-player', {
                 height: '0',
@@ -549,13 +664,38 @@
                 }
             });
         }
+        let isMusicPlaying = false;
         
         function onPlayerReady(event) {
-            // Bật chế độ loop
+            
             event.target.setLoop(true);
-            // Đặt volume 50%
+            
             event.target.setVolume(50);
+             try {
+                event.target.playVideo();
+            } catch (e) {
+                console.log("Autoplay bị chặn, cần tương tác người dùng");
+            }
         }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                isMusicPlaying = true;
+            }
+        }
+
+        
+        function enableMusicPlayback() {
+            if (!isMusicPlaying && youtubePlayer) {
+                youtubePlayer.playVideo();
+            }
+        }
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.addEventListener('click', enableMusicPlayback);
+            document.body.addEventListener('touchstart', enableMusicPlayback);
+        });
     </script>
 </body>
 </html>
