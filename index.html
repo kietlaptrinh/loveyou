@@ -471,24 +471,27 @@
             }
         }
         
-       
+       let isMoving = false;
         function moveNoButton() {
-            const btn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
-            
-            btn.style.position = 'absolute';
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
+    if (isMoving) return;
 
-           
-            btn.style.transition = 'all 0.5s ease-out';
-            
-            
-            setTimeout(() => {
-                btn.style.transition = 'none';
-            }, 500);
-        }
+    isMoving = true;
+    const btn = document.getElementById('noBtn');
+    const maxX = window.innerWidth - btn.offsetWidth - 10;
+    const maxY = window.innerHeight - btn.offsetHeight - 10;
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    btn.style.position = 'absolute';
+    btn.style.left = Math.max(0, Math.min(x, maxX)) + 'px';
+    btn.style.top = Math.max(0, Math.min(y, maxY)) + 'px';
+    btn.style.transition = 'all 0.5s ease-out';
+
+    setTimeout(() => {
+        btn.style.transition = 'none';
+        isMoving = false;
+    }, 500);
+}
 
         
         function hasHover() {
@@ -499,19 +502,15 @@
         function setupNoButton() {
             const noBtn = document.getElementById('noBtn');
             
-            if (hasHover()) {
-                
+            if (hasHover()) {              
                 noBtn.addEventListener('mouseover', moveNoButton);
-            } else {
-                
+            } else {               
                 noBtn.addEventListener('touchstart', function(e) {
                     e.preventDefault();
                     moveNoButton();
                 });
-                noBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    moveNoButton();
-                });
+                
+                
             }
         }
 
